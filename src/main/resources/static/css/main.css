@@ -7,6 +7,10 @@ body {
     background-color: #3d4f58;
 }
 
+.input {
+    color: #000000;
+}
+
 .add {
     background: linear-gradient(#009900, #006600);
     border-radius: 5px;

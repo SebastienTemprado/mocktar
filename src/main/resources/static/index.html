@@ -5,8 +5,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     </head>
     <body>
-        Mocktar !
+        <h1>Mocktar !</h1>
+
         <div id="app">
+            Mock name : <input class="input" v-model.trim="name"> <button class="add" v-on:click="getMock">Get the mock</button>
             {{ message }}
         </div>
 
