@@ -11,7 +11,7 @@
             <h1>Mocktar !</h1>
         </header>
 
-        <main>
+        <main id="app">
             <div id="content">
                 <div id="mocks-list">
                     <ul>
@@ -55,14 +55,13 @@
                 </div>
             </div>
             <div id="actions">
-                <!-- <div id="app">
-                    Mock name : <input class="input" v-model.trim="name"> <button class="add" v-on:click="getMock">Get the mock</button>
-                    {{ message }}
-                </div> -->
-
                 <div>
                     <button class="add" onclick="addMock()">New mock</button>
                 </div>
+            </div>
+            <div>
+                <!-- Mock name : <input class="input" v-model.trim="name"> <button class="add" v-on:click="getMock">Get the mock</button> -->
+                {{ message }}
             </div>
         </main>
     </body>

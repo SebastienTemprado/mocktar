@@ -9,14 +9,15 @@ function removeMock() {
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Hello Vue!',
+        mocks: [],
+        message: '',
         name: ''
     },
     created: function() {
         const vm = this;
-        axios.get('https://yesno.wtf/api')
+        axios.get('http://localhost:8080/mocks')
         .then(function (response) {
-            vm.message = response.data.answer;
+            vm.mocks = response.data;
         })
         .catch(function (error) {
             vm.message = 'Error! Could not reach the API. ' + error;

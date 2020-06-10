@@ -19,7 +19,7 @@ public class MockController {
 	private MockService mockService;
 
 	@GetMapping("/mocks")
-	public List<Mock> getMocks(@RequestParam(value = "name") String name) {
+	public List<Mock> getMocks(@RequestParam(value = "name", required = false) String name) {
 		return mockService.getMocks(name);
 	}
 
