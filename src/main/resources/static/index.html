@@ -15,14 +15,8 @@
             <div id="content">
                 <div id="mocks-list">
                     <ul>
-                        <li>
-                            <a href="#">Mock1</a><button class="delete" onclick="removeMock()">Remove</button>
-                        </li>
-                        <li>
-                            <a href="#">Mock2</a><button class="delete" onclick="removeMock()">Remove</button>
-                        </li>
-                        <li>
-                            <a href="#">Mock3</a><button class="delete" onclick="removeMock()">Remove</button>
+                        <li v-for="mock in mocks">
+                            <a href="#">{{ mock.name }}</a><button class="delete" onclick="removeMock()">Remove</button>
                         </li>
                     </ul>
                 </div>
