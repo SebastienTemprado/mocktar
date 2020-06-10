@@ -11,7 +11,9 @@ var app = new Vue({
     data: {
         mocks: [],
         message: '',
-        name: ''
+        name: '',
+        request: '',
+        response: ''
     },
     created: function() {
         const vm = this;
@@ -32,6 +34,9 @@ var app = new Vue({
                     vm.message = 'No result';
                 } else {
                     vm.message = response.data[0].id;
+                    vm.name = response.data[0].name;
+                    vm.request = response.data[0].request;
+                    vm.response = response.data[0].response;
                 }
             })
             .catch(function (error) {

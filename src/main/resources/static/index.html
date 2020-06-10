@@ -27,7 +27,7 @@
                             <label for="name">Name:</label>
                         </div>
                         <div class="field">
-                            <input class="input">
+                            <input v-model.trim="name" class="input">
                         </div>
                     </div>
                     <div class="row">
@@ -35,7 +35,7 @@
                             <label for="request">Request:</label>
                         </div>
                         <div class="field">
-                            <textarea id="request" class="input"></textarea>
+                            <textarea id="request" v-model.trim="request" class="input"></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -43,7 +43,7 @@
                             <label for="response">Response:</label>
                         </div>
                         <div class="field">
-                            <textarea id="response" class="input"></textarea>
+                            <textarea id="response" v-model.trim="response" class="input"></textarea>
                         </div>
                     </div>
                 </div>
