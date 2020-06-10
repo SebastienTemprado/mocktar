@@ -36,10 +36,13 @@ main {
 }
 
 #mock-content {
-    display: flex;
-    flex-direction: column;
     width: 80%;
     padding: 5px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
 }
 
 #actions {
@@ -48,8 +51,18 @@ main {
     align-self: flex-start;
 }
 
+.label {
+    width: 10%;
+}
+
+.field {
+    width: 90%;
+}
+
+
 .input {
     color: #000000;
+    width: 90%;
 }
 
 .add {
