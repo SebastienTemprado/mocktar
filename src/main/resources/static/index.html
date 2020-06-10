@@ -1,21 +1,58 @@
 <!DOCTYPE>
 <html>
     <head>
+        <meta charset="utf-8">
+        <title>Mocktar</title>
         <link rel="stylesheet" href="/css/main.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1>Mocktar !</h1>
+        <header>
+            <h1>Mocktar !</h1>
+        </header>
 
-        <div id="app">
-            Mock name : <input class="input" v-model.trim="name"> <button class="add" v-on:click="getMock">Get the mock</button>
-            {{ message }}
-        </div>
+        <main>
+            <div id="content">
+                <div id="mocks-list">
+                    <ul>
+                        <li>
+                            <a href="#">Mock1</a><button class="delete" onclick="removeMock()">Remove</button>
+                        </li>
+                        <li>
+                            <a href="#">Mock2</a><button class="delete" onclick="removeMock()">Remove</button>
+                        </li>
+                        <li>
+                            <a href="#">Mock3</a><button class="delete" onclick="removeMock()">Remove</button>
+                        </li>
+                    </ul>
+                </div>
 
-        <div>
-            <button class="add" onclick="addMock()">Add a mock</button>
-            <button class="delete" onclick="removeMock()">Remove a mock</button>
-        </div>
+                <div id="mock-content">
+                    <div class="row">
+                        <label for="name">Name:</label>
+                        <input class="input" >
+                    </div>
+                    <div class="row">
+                        <label for="request">Request:</label>
+                        <textarea id="request"></textarea>
+                    </div>
+                    <div class="row">
+                        <label for="response">Response:</label>
+                        <textarea id="response"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="actions">
+                <!-- <div id="app">
+                    Mock name : <input class="input" v-model.trim="name"> <button class="add" v-on:click="getMock">Get the mock</button>
+                    {{ message }}
+                </div> -->
+
+                <div>
+                    <button class="add" onclick="addMock()">New mock</button>
+                </div>
+            </div>
+        </main>
     </body>
 </html>
 

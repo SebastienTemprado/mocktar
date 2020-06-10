@@ -7,6 +7,47 @@ body {
     background-color: #3d4f58;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+} 
+
+#content {
+    display: flex;
+    flex-direction: row;
+}
+
+#mocks-list ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    width: 20%;
+}
+
+#mocks-list ul li {
+    height: 30px;
+    width: 200px;   
+    padding: 5px;
+    list-style: none;
+}
+
+#mocks-list ul li a {
+    text-decoration: none;
+}
+
+#mock-content {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 5px;
+}
+
+#actions {
+    display: flex;
+    justify-content: space-around;
+    align-self: flex-start;
+}
+
 .input {
     color: #000000;
 }
@@ -14,9 +55,11 @@ body {
 .add {
     background: linear-gradient(#009900, #006600);
     border-radius: 5px;
+    margin: 15px 30px;
 }
 
 .delete {
     background: linear-gradient(#FF1744, #CC0000);
     border-radius: 5px;
+    margin-left: 10px;
 }
