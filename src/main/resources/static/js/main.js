@@ -24,9 +24,9 @@ var app = new Vue({
         })
     },
     methods: {
-        getMock: function(event) {
+        getMock: function(name) {
             const vm = this;
-            axios.get(`http://localhost:8080/mocks?name=${vm.name}`)
+            axios.get(`http://localhost:8080/mocks?name=${name}`)
             .then(function (response) {
                 if (response.data.length == 0) {
                     vm.message = 'No result';

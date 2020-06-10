@@ -16,7 +16,7 @@
                 <div id="mocks-list">
                     <ul>
                         <li v-for="mock in mocks">
-                            <a href="#">{{ mock.name }}</a><button class="delete" onclick="removeMock()">Remove</button>
+                            <button class="delete" onclick="removeMock()">X</button><a href="#" v-on:click="getMock([mock.name])">{{ mock.name }}</a>
                         </li>
                     </ul>
                 </div>

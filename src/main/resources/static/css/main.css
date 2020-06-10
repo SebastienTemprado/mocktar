@@ -74,5 +74,5 @@ main {
 .delete {
     background: linear-gradient(#FF1744, #CC0000);
     border-radius: 5px;
-    margin-left: 10px;
+    margin-right: 10px;
 }
