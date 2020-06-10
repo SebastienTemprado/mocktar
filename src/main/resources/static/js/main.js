@@ -25,9 +25,13 @@ var app = new Vue({
     methods: {
         getMock: function(event) {
             const vm = this;
-            axios.get(`http://localhost:8080/mock?name=${vm.name}`)
+            axios.get(`http://localhost:8080/mocks?name=${vm.name}`)
             .then(function (response) {
-                vm.message = response.data.id;
+                if (response.data.length == 0) {
+                    vm.message = 'No result';
+                } else {
+                    vm.message = response.data[0].id;
+                }
             })
             .catch(function (error) {
                 vm.message = 'Error! Could not reach the API. ' + error;
