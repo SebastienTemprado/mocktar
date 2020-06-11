@@ -9,15 +9,19 @@ var app = new Vue({
     },
     created: function() {
         const vm = this;
-        axios.get('http://localhost:8080/mocks')
-        .then(function (response) {
-            vm.mocks = response.data;
-        })
-        .catch(function (error) {
-            vm.message = 'Error! Could not reach the API. ' + error;
-        })
+        vm.getMocks();
     },
     methods: {
+        getMocks: function() {
+            const vm = this;
+            axios.get('http://localhost:8080/mocks')
+            .then(function (response) {
+                vm.mocks = response.data;
+            })
+            .catch(function (error) {
+                vm.message = 'Error! Could not reach the API. ' + error;
+            })
+        },
         getMock: function(name) {
             const vm = this;
             axios.get(`http://localhost:8080/mocks?name=${name}`)
@@ -54,13 +58,7 @@ var app = new Vue({
                 })
                 .then(function (response) {
                     vm.message = `mock ${vm.name} added!` ;
-                    axios.get('http://localhost:8080/mocks')
-                    .then(function (response) {
-                        vm.mocks = response.data;
-                    })
-                    .catch(function (error) {
-                        vm.message = 'Error! Could not reach the API. ' + error;
-                    })
+                    vm.getMocks();
                 })
                 .catch(function (error) {
                     vm.message = `Error! Could not add the mock ${vm.name}.` + error;
