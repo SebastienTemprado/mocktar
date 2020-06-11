@@ -41,20 +41,28 @@ var app = new Vue({
         },
         addMock: function() {
             const vm = this;
-            this.$refs.addButton.textContent = '\u2713';
+            if (this.$refs.addButton.textContent === "+") {
+                vm.id = 0;
+                vm.name = '';
+                vm.request = '';
+                vm.response = '';
+                this.$refs.addButton.textContent = '\u2713';
+            } else {
+                this.$refs.addButton.textContent = '+';
 
-            axios.post(`http://localhost:8080/mocks`, {
-                id: 0,
-                name: vm.name,
-                request: vm.request,
-                response: vm.response
-            })
-            .then(function (response) {
-                vm.message = `mock ${vm.name} added!` ;
-            })
-            .catch(function (error) {
-                vm.message = `Error! Could not add the mock ${vm.name}.` + error;
-            })
+                axios.post(`http://localhost:8080/mocks`, {
+                    id: 0,
+                    name: vm.name,
+                    request: vm.request,
+                    response: vm.response
+                })
+                .then(function (response) {
+                    vm.message = `mock ${vm.name} added!` ;
+                })
+                .catch(function (error) {
+                    vm.message = `Error! Could not add the mock ${vm.name}.` + error;
+                })
+            }
             
         },
         removeMock: function(name) {
