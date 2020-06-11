@@ -2,10 +2,6 @@ function addMock() {
     alert("mock added!");
 }
 
-function removeMock() {
-    alert("mock removed!");
-}
-
 var app = new Vue({
     el: '#app',
     data: {
@@ -42,7 +38,16 @@ var app = new Vue({
             .catch(function (error) {
                 vm.message = 'Error! Could not reach the API. ' + error;
             })
-            
+        },
+        removeMock: function(name) {
+            const vm = this;
+            axios.delete(`http://localhost:8080/mocks/${name}`)
+            .then(function (response) {
+                vm.message = `mock ${name} deleted!` ;
+            })
+            .catch(function (error) {
+                vm.message = `Error! Could not delete mock ${name}.` + error;
+            })
         }
     }
 })
