@@ -68,6 +68,7 @@ var app = new Vue({
             axios.delete(`http://localhost:8080/mocks/${name}`)
             .then(function (response) {
                 vm.message = `mock ${name} deleted!` ;
+                vm.getMocks();
             })
             .catch(function (error) {
                 vm.message = `Error! Could not delete the mock ${name}.` + error;
