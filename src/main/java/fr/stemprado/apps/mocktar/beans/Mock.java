@@ -1,8 +1,12 @@
 package fr.stemprado.apps.mocktar.beans;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 
 public class Mock {
+
+    @Transient
+    public static final String SEQUENCE_NAME = "mocks_sequence";
 
     @Id
     public Long id;
@@ -13,7 +17,8 @@ public class Mock {
   
     public Mock() {}
   
-    public Mock(String name, String request, String response) {
+    public Mock(long id, String name, String request, String response) {
+      this.id = id;
       this.name = name;
       this.request = request;
       this.response = response;

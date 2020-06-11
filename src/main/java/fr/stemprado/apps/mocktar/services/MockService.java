@@ -16,6 +16,9 @@ public class MockService {
     @Autowired
     private MockRepository dao;
 
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+
     public List<Mock> getMocks(String name) {
         List<Mock> mocks = new ArrayList<>();
         if (name == null) {
@@ -30,6 +33,9 @@ public class MockService {
     }
 
     public void postMock(Mock mock) {
+        if (mock.id == 0) {
+            mock.id = sequenceGeneratorService.generateSequence(Mock.SEQUENCE_NAME);
+        }
         dao.insert(mock);
     }
 

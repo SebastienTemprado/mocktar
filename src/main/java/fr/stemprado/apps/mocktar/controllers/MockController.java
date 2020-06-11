@@ -25,7 +25,7 @@ public class MockController {
 		return mockService.getMocks(name);
 	}
 
-	@PostMapping("/mock")
+	@PostMapping("/mocks")
 	public void postMock(@RequestBody Mock mock) {
 		mockService.postMock(mock);
 	}

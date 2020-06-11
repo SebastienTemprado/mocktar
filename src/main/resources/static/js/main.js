@@ -42,7 +42,20 @@ var app = new Vue({
         addMock: function() {
             const vm = this;
             this.$refs.addButton.textContent = '\u2713';
-            vm.message = `mock added!` ;
+
+            axios.post(`http://localhost:8080/mocks`, {
+                id: 0,
+                name: vm.name,
+                request: vm.request,
+                response: vm.response
+            })
+            .then(function (response) {
+                vm.message = `mock ${vm.name} added!` ;
+            })
+            .catch(function (error) {
+                vm.message = `Error! Could not add the mock ${vm.name}.` + error;
+            })
+            
         },
         removeMock: function(name) {
             const vm = this;
@@ -51,7 +64,7 @@ var app = new Vue({
                 vm.message = `mock ${name} deleted!` ;
             })
             .catch(function (error) {
-                vm.message = `Error! Could not delete mock ${name}.` + error;
+                vm.message = `Error! Could not delete the mock ${name}.` + error;
             })
         }
     }
