@@ -24,6 +24,7 @@ var app = new Vue({
         },
         getMock: function(name) {
             const vm = this;
+            this.$refs.addButton.textContent = '+';
             axios.get(`http://localhost:8080/mocks?name=${name}`)
             .then(function (response) {
                 if (response.data.length == 0) {
@@ -45,21 +46,25 @@ var app = new Vue({
                 vm.clearForm();
                 this.$refs.addButton.textContent = '\u2713';
             } else {
-                axios.post(`http://localhost:8080/mocks`, {
-                    id: 0,
-                    name: vm.name,
-                    request: vm.request,
-                    response: vm.response
-                })
-                .then(function (response) {
-                    vm.message = `mock ${vm.name} added!` ;
-                    vm.getMocks();
-                })
-                .catch(function (error) {
-                    vm.message = `Error! Could not add the mock ${vm.name}.` + error;
-                })
-                this.$refs.addButton.textContent = '+';
-                vm.clearForm();
+                if (this.validateForm(vm)) {
+                    axios.post(`http://localhost:8080/mocks`, {
+                        id: 0,
+                        name: vm.name,
+                        request: vm.request,
+                        response: vm.response
+                    })
+                    .then(function (response) {
+                        vm.message = `mock ${vm.name} added!` ;
+                        vm.getMocks();
+                    })
+                    .catch(function (error) {
+                        vm.message = `Error! Could not add the mock ${vm.name}.` + error;
+                    })
+                    this.$refs.addButton.textContent = '+';
+                    vm.clearForm();
+                } else {
+                    vm.message = `Error! Invalid form.`;
+                }
             }
             
         },
@@ -74,6 +79,15 @@ var app = new Vue({
                 vm.message = `Error! Could not delete the mock ${name}.` + error;
             })
         },
+        validateForm: function(vm) {
+            let validForm = false;
+
+            if (vm.name !== '' && vm.request !== '' && vm.response !== '') {
+                validForm = true;
+            }
+
+            return validForm;
+        }, 
         clearForm: function() {
             const vm = this;
             vm.id = 0;
