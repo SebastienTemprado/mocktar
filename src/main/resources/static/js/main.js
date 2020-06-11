@@ -1,7 +1,3 @@
-function addMock() {
-    alert("mock added!");
-}
-
 var app = new Vue({
     el: '#app',
     data: {
