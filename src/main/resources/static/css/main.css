@@ -68,7 +68,6 @@ main {
 .add {
     background: linear-gradient(#009900, #006600);
     border-radius: 5px;
-    margin: 15px 30px;
 }
 
 .delete {

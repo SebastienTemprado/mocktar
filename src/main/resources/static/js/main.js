@@ -39,6 +39,11 @@ var app = new Vue({
                 vm.message = 'Error! Could not reach the API. ' + error;
             })
         },
+        addMock: function() {
+            const vm = this;
+            this.$refs.addButton.textContent = '\u2713';
+            vm.message = `mock added!` ;
+        },
         removeMock: function(name) {
             const vm = this;
             axios.delete(`http://localhost:8080/mocks/${name}`)
