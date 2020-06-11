@@ -32,4 +32,9 @@ public class MockService {
     public void postMock(Mock mock) {
         dao.insert(mock);
     }
+
+	public void deleteMock(String name) {
+        Mock mock = dao.findByName(name);
+        dao.delete(mock);        
+	}
 }
