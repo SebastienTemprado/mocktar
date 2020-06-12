@@ -35,10 +35,12 @@ var app = new Vue({
                     vm.name = response.data[0].name;
                     vm.request = response.data[0].request;
                     vm.response = response.data[0].response;
+                    vm.formActivation = true;
                 }
             })
             .catch(function (error) {
                 vm.message = 'Error! Could not reach the API. ' + error;
+                vm.formActivation = false;
             })
         },
         addMock: function() {
