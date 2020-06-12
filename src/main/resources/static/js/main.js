@@ -108,6 +108,7 @@ var app = new Vue({
                 vm.getMocks();
                 if (name == vm.name) {
                     vm.updating = false;
+                    vm.formActivation = false;
                     vm.clearForm();
                 }
             })
