@@ -95,6 +95,7 @@ var app = new Vue({
                     vm.message = `Error! Could not add the mock ${vm.name}.` + error;
                 })
                 vm.formActivation = false;
+                vm.updating = false;
                 vm.clearForm();
             } else {
                 vm.message = `Error! Invalid form.`;
