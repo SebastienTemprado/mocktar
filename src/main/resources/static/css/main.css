@@ -78,6 +78,10 @@ main {
     margin-left: 5px;
 }
 
+.update:disabled {
+    background: #666666;
+}
+
 .delete {
     background: linear-gradient(#FF1744, #CC0000);
     border-radius: 5px;
