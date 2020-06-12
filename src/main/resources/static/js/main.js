@@ -77,6 +77,9 @@ var app = new Vue({
             .then(function (response) {
                 vm.message = `mock ${name} deleted!` ;
                 vm.getMocks();
+                if (name == vm.name) {
+                    vm.clearForm();
+                }
             })
             .catch(function (error) {
                 vm.message = `Error! Could not delete the mock ${name}.` + error;
