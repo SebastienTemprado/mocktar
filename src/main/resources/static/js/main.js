@@ -1,11 +1,12 @@
 var app = new Vue({
     el: '#app',
-    data: {
+    data: { 
         mocks: [],
         message: '',
         name: '',
         request: '',
-        response: ''
+        response: '',
+        formActivation: false
     },
     created: function() {
         const vm = this;
@@ -44,6 +45,7 @@ var app = new Vue({
             const vm = this;
             if (this.$refs.addButton.textContent === "+") {
                 vm.clearForm();
+                vm.formActivation = true;
                 this.$refs.addButton.textContent = '\u2713';
             } else {
                 if (this.validateForm(vm)) {
@@ -61,6 +63,7 @@ var app = new Vue({
                         vm.message = `Error! Could not add the mock ${vm.name}.` + error;
                     })
                     this.$refs.addButton.textContent = '+';
+                    vm.formActivation = false;
                     vm.clearForm();
                 } else {
                     vm.message = `Error! Invalid form.`;
