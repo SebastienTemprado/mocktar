@@ -3,6 +3,7 @@ var app = new Vue({
     data: { 
         mocks: [],
         message: '',
+        id: 0,
         name: '',
         request: '',
         response: '',
@@ -33,6 +34,7 @@ var app = new Vue({
                     vm.message = 'No result';
                 } else {
                     vm.message = response.data[0].id;
+                    vm.id = response.data[0].id;
                     vm.name = response.data[0].name;
                     vm.request = response.data[0].request;
                     vm.response = response.data[0].response;
@@ -79,6 +81,19 @@ var app = new Vue({
         updateMock: function() {
             const vm = this;
             if (this.validateForm(vm)) {
+                axios.put(`http://localhost:8080/mocks`, {
+                    id: vm.id,
+                    name: vm.name,
+                    request: vm.request,
+                    response: vm.response
+                })
+                .then(function (response) {
+                    vm.message = `mock ${vm.name} updated!` ;
+                    vm.getMocks();
+                })
+                .catch(function (error) {
+                    vm.message = `Error! Could not add the mock ${vm.name}.` + error;
+                })
                 vm.formActivation = false;
                 vm.clearForm();
             } else {

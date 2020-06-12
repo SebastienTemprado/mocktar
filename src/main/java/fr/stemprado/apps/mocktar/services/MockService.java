@@ -39,6 +39,10 @@ public class MockService {
         dao.insert(mock);
     }
 
+    public void putMock(Mock mock) {
+        dao.save(mock);
+    }
+
 	public void deleteMock(String name) {
         Mock mock = dao.findByName(name);
         dao.delete(mock);        
