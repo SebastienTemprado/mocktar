@@ -25,7 +25,7 @@ var app = new Vue({
         },
         getMock: function(name) {
             const vm = this;
-            this.$refs.addButton.textContent = '+';
+            this.$refs.addButton.textContent = '+ Add';
             axios.get(`http://localhost:8080/mocks?name=${name}`)
             .then(function (response) {
                 if (response.data.length == 0) {
@@ -45,10 +45,10 @@ var app = new Vue({
         },
         addMock: function() {
             const vm = this;
-            if (this.$refs.addButton.textContent === "+") {
+            if (this.$refs.addButton.textContent === "+ Add") {
                 vm.clearForm();
                 vm.formActivation = true;
-                this.$refs.addButton.textContent = '\u2713';
+                this.$refs.addButton.textContent = '\u2713 Add';
             } else {
                 if (this.validateForm(vm)) {
                     axios.post(`http://localhost:8080/mocks`, {
@@ -64,7 +64,7 @@ var app = new Vue({
                     .catch(function (error) {
                         vm.message = `Error! Could not add the mock ${vm.name}.` + error;
                     })
-                    this.$refs.addButton.textContent = '+';
+                    this.$refs.addButton.textContent = '+ Add';
                     vm.formActivation = false;
                     vm.clearForm();
                 } else {
