@@ -68,6 +68,14 @@ main {
 .add {
     background: linear-gradient(#009900, #006600);
     border-radius: 5px;
+    line-height: 1.5em;
+}
+
+.update {
+    background: linear-gradient(#009900, #006600);
+    border-radius: 5px;
+    line-height: 1.5em;
+    margin-left: 5px;
 }
 
 .delete {

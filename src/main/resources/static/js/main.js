@@ -6,7 +6,8 @@ var app = new Vue({
         name: '',
         request: '',
         response: '',
-        formActivation: false
+        formActivation: false,
+        updating: false
     },
     created: function() {
         const vm = this;
@@ -36,6 +37,7 @@ var app = new Vue({
                     vm.request = response.data[0].request;
                     vm.response = response.data[0].response;
                     vm.formActivation = true;
+                    vm.updating = true;
                 }
             })
             .catch(function (error) {
@@ -45,6 +47,7 @@ var app = new Vue({
         },
         addMock: function() {
             const vm = this;
+            vm.updating = false;
             if (this.$refs.addButton.textContent === "+ Add") {
                 vm.clearForm();
                 vm.formActivation = true;
@@ -73,6 +76,15 @@ var app = new Vue({
             }
             
         },
+        updateMock: function() {
+            const vm = this;
+            if (this.validateForm(vm)) {
+                vm.formActivation = false;
+                vm.clearForm();
+            } else {
+                vm.message = `Error! Invalid form.`;
+            }
+        },
         removeMock: function(name) {
             const vm = this;
             axios.delete(`http://localhost:8080/mocks/${name}`)
@@ -80,6 +92,7 @@ var app = new Vue({
                 vm.message = `mock ${name} deleted!` ;
                 vm.getMocks();
                 if (name == vm.name) {
+                    vm.updating = false;
                     vm.clearForm();
                 }
             })

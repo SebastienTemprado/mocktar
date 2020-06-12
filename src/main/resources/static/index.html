@@ -19,7 +19,7 @@
                             <button class="delete" v-on:click="removeMock([mock.name])">X</button><a href="#" v-on:click="getMock([mock.name])">{{ mock.name }}</a>
                         </li>
                         <li>
-                            <button id="addButton" ref="addButton" class="add" v-on:click="addMock()">+ Add</button>
+                            <button id="addButton" ref="addButton" class="add" v-on:click="addMock()">+ Add</button><button id="updateButton" ref="updateButton" class="update" v-on:click="updateMock()" :disabled="!updating">&#10003; Update</button>
                         </li>
                     </ul>
                 </div>
