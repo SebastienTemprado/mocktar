@@ -10,7 +10,7 @@ An application for mocking API
 <li>Handle QueryParams</li>
 <li>Handle HeaderParams</li>
 <li>Group Requests by API name</li>
-<li>Order Requests by alphabetical name</li>
+<li>Can't add a mock with a name that already exists</li>
 <li>Add filter field</li>
 <li>Load the configuration file from a location outside the jar</li>
 <li>Store mocks in MongoDB *OR* in FS</li>
