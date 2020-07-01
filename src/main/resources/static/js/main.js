@@ -55,7 +55,8 @@ var app = new Vue({
                 vm.formActivation = true;
                 this.$refs.addButton.textContent = '\u2713 Add';
             } else {
-                if (this.validateForm(vm)) {
+                try {
+                    this.validateForm(vm);
                     axios.post(`http://localhost:8080/mocks`, {
                         id: 0,
                         name: vm.name,
@@ -72,15 +73,16 @@ var app = new Vue({
                     this.$refs.addButton.textContent = '+ Add';
                     vm.formActivation = false;
                     vm.clearForm();
-                } else {
-                    vm.message = `Error! Invalid form.`;
+                } catch (error) {
+                    vm.message = error;
                 }
             }
             
         },
         updateMock: function() {
             const vm = this;
-            if (this.validateForm(vm)) {
+            try {
+                this.validateForm(vm);
                 axios.put(`http://localhost:8080/mocks`, {
                     id: vm.id,
                     name: vm.name,
@@ -97,8 +99,8 @@ var app = new Vue({
                 vm.formActivation = false;
                 vm.updating = false;
                 vm.clearForm();
-            } else {
-                vm.message = `Error! Invalid form.`;
+            } catch (error) {
+                vm.message = error;
             }
         },
         removeMock: function(name) {
@@ -118,13 +120,13 @@ var app = new Vue({
             })
         },
         validateForm: function(vm) {
-            let validForm = false;
-
-            if (vm.name !== '' && vm.request !== '' && vm.response !== '') {
-                validForm = true;
+            if (vm.name === '' || vm.request === '' || vm.response === '') {
+                throw new Error(`Invalid form.`);
             }
 
-            return validForm;
+            if (vm.mocks.filter(m => m.name === vm.name && m.id !== vm.id).length > 0) {
+                throw new Error('This mock already exists!');
+            } 
         }, 
         clearForm: function() {
             const vm = this;
