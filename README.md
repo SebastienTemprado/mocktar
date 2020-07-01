@@ -4,7 +4,6 @@ An application for mocking API
 # TODO
 
 <ul>
-<li>Can't add a mock with a name that already exists</li>
 <li>Handle QueryParams</li>
 <li>Add the Verb field</li>
 <li>Body request field for POST requests...</li>
