@@ -43,6 +43,7 @@ main {
 .row {
     display: flex;
     flex-direction: row;
+    margin-top: 5px;
 }
 
 #actions {
@@ -59,10 +60,28 @@ main {
     width: 90%;
 }
 
+.field-name-value {
+    display: flex;
+    width: 90%;
+}
+
+.field-name-value .label {
+    width: 5%;
+    text-align: center;
+}
+
+.field-name-value .field {
+    width: 20%;
+}
 
 .input {
     color: #000000;
-    width: 90%;
+    width: 50%;
+}
+
+.inputQueryParam {
+    color: #000000;
+    width: 100%; 
 }
 
 .add {

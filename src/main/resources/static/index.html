@@ -30,7 +30,7 @@
                             <label for="name">Name:</label>
                         </div>
                         <div class="field">
-                            <input v-model.trim="name" class="input" :disabled="!formActivation">
+                            <input id="name" v-model.trim="name" class="input" :disabled="!formActivation">
                         </div>
                     </div>
                     <div class="row">
@@ -39,6 +39,25 @@
                         </div>
                         <div class="field">
                             <input id="request" v-model.trim="request" class="input" :disabled="!formActivation">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            QueryParam:
+                        </div>
+                        <div class="field-name-value">
+                            <div class="label">
+                                <label for="queryParamName1">Name:</label>
+                            </div>
+                            <div class="field">
+                                <input id="queryParamName1" v-model.trim="queryParamName1" class="inputQueryParam" :disabled="!formActivation">
+                            </div>
+                            <div class="label">
+                                <label for="queryParamValue1">Value:</label>
+                            </div>
+                            <div class="field">
+                                <input id="queryParamValue1" v-model.trim="queryParamValue1" class="inputQueryParam" :disabled="!formActivation">
+                            </div>
                         </div>
                     </div>
                     <div class="row">

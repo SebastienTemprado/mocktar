@@ -6,6 +6,8 @@ var app = new Vue({
         id: 0,
         name: '',
         request: '',
+        queryParamName1: '',
+        queryParamValue1: '',
         response: '',
         formActivation: false,
         updating: false
