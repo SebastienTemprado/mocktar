@@ -60,9 +60,15 @@ main {
     width: 90%;
 }
 
+.row-multi-field {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
 .field-name-value {
     display: flex;
-    width: 90%;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 .field-name-value .label {
