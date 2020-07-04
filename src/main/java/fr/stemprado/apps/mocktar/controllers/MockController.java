@@ -51,7 +51,6 @@ public class MockController {
     public String handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String mockURI = request.getRequestURI().replace("/mocktar", "");
 		List<Mock> mocks = mockService.getMocks(null);
-		
 		Mock mock = mocks.stream().filter(m -> m.request.equals(mockURI)).findFirst().orElseThrow(() -> new NotFoundException());
 
       	return mock.response;

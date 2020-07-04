@@ -61,10 +61,12 @@ var app = new Vue({
             } else {
                 try {
                     this.validateForm(vm);
+                    let queryParams = [{name: vm.queryParamName1, value: vm.queryParamValue1}, {name: vm.queryParamName2, value: vm.queryParamValue2}];
                     axios.post(`http://localhost:8080/mocks`, {
                         id: 0,
                         name: vm.name,
                         request: vm.request,
+                        queryParams: queryParams,
                         response: vm.response
                     })
                     .then(function (response) {
@@ -87,10 +89,12 @@ var app = new Vue({
             const vm = this;
             try {
                 this.validateForm(vm);
+                let queryParams = [{name: vm.queryParamName1, value: vm.queryParamValue1}, {name: vm.queryParamName2, value: vm.queryParamValue2}];
                 axios.put(`http://localhost:8080/mocks`, {
                     id: vm.id,
                     name: vm.name,
                     request: vm.request,
+                    queryParams: queryParams,
                     response: vm.response
                 })
                 .then(function (response) {

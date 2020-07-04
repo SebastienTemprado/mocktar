@@ -1,5 +1,8 @@
 package fr.stemprado.apps.mocktar.beans;
 
+import java.util.List;
+
+import fr.stemprado.apps.mocktar.beans.QueryParam;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
@@ -13,20 +16,22 @@ public class Mock {
   
     public String name;
     public String request;
+    public List<QueryParam> queryParams;
     public String response;
   
     public Mock() {}
   
-    public Mock(long id, String name, String request, String response) {
+    public Mock(long id, String name, String request, List<QueryParam> queryParams, String response) {
       this.id = id;
       this.name = name;
       this.request = request;
+      this.queryParams = queryParams;
       this.response = response;
     }
   
     @Override
     public String toString() {
       return String.format(
-          "Mock[id=%d, name='%s' request='%s', response='%s']", id, name, request, response);
+          "Mock[id=%d, name='%s' request='%s', queryParams='%s' response='%s']", id, name, request, queryParams == null ? "" : queryParams.toString(), response);
     }    
 }
