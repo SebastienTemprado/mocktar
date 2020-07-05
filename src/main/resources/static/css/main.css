@@ -101,6 +101,11 @@ main {
     line-height: 1.5em;
 }
 
+.deleteQueryParamButton {
+    background: linear-gradient(#FF1744, #CC0000);
+    border-radius: 5px;
+}
+
 .update {
     background: linear-gradient(#009900, #006600);
     border-radius: 5px;
