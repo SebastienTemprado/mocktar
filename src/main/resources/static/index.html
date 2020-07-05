@@ -48,16 +48,16 @@
                         <div class="row-multi-field">
                             <div class="field-name-value" v-for="(queryParam, index) in queryParams">
                                 <div class="label">
-                                    <label for="queryParamName{{ index }}">Name:</label>
+                                    <label :for="'queryParamName' + index">Name:</label>
                                 </div>
                                 <div class="field">
-                                    <input id="queryParamName{{ index }}" v-model.trim="queryParams[index].name" class="inputQueryParam" :disabled="!formActivation">
+                                    <input :id="'queryParamName' + index" v-model.trim="queryParams[index].name" class="inputQueryParam" :disabled="!formActivation">
                                 </div>
                                 <div class="label">
-                                    <label for="queryParamValue{{ index }}">Value:</label>
+                                    <label :for="'queryParamValue' + index">Value:</label>
                                 </div>
                                 <div class="field">
-                                    <input id="queryParamValue{{ index }}" v-model.trim="queryParams[index].value" class="inputQueryParam" :disabled="!formActivation">
+                                    <input :id="'queryParamValue' + index" v-model.trim="queryParams[index].value" class="inputQueryParam" :disabled="!formActivation">
                                 </div>
                             </div>
                         </div>
