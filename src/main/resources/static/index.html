@@ -60,6 +60,21 @@
                                     <input :id="'queryParamValue' + index" v-model.trim="queryParams[index].value" class="inputQueryParam" :disabled="!formActivation">
                                 </div>
                             </div>
+                            <div class="field-name-value">
+                                <button id="addQueryParamButton" ref="addQueryParamButton" class="add button" v-on:click="addQueryParam()">+</button>
+                                <div class="label">
+                                    <label>Name:</label>
+                                </div>
+                                <div class="field">
+                                    <input class="inputQueryParam" disabled="true">
+                                </div>
+                                <div class="label">
+                                    <label>Value:</label>
+                                </div>
+                                <div class="field">
+                                    <input class="inputQueryParam" disabled="true">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">

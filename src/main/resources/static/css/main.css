@@ -71,13 +71,18 @@ main {
     margin-bottom: 5px;
 }
 
+.field-name-value .button {
+    width: 2%;
+    text-align: center;
+}
+
 .field-name-value .label {
     width: 5%;
     text-align: center;
 }
 
 .field-name-value .field {
-    width: 20%;
+    width: 19%;
 }
 
 .input {
