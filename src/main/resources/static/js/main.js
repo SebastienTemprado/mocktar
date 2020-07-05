@@ -6,10 +6,7 @@ var app = new Vue({
         id: 0,
         name: '',
         request: '',
-        queryParamName1: '',
-        queryParamValue1: '',
-        queryParamName2: '',
-        queryParamValue2: '',
+        queryParams: [],
         response: '',
         formActivation: false,
         updating: false
@@ -41,6 +38,7 @@ var app = new Vue({
                     vm.id = response.data[0].id;
                     vm.name = response.data[0].name;
                     vm.request = response.data[0].request;
+                    vm.queryParams = response.data[0].queryParams;
                     vm.response = response.data[0].response;
                     vm.formActivation = true;
                     vm.updating = true;
@@ -61,12 +59,11 @@ var app = new Vue({
             } else {
                 try {
                     this.validateForm(vm);
-                    let queryParams = [{name: vm.queryParamName1, value: vm.queryParamValue1}, {name: vm.queryParamName2, value: vm.queryParamValue2}];
                     axios.post(`http://localhost:8080/mocks`, {
                         id: 0,
                         name: vm.name,
                         request: vm.request,
-                        queryParams: queryParams,
+                        queryParams: vm.queryParams,
                         response: vm.response
                     })
                     .then(function (response) {
@@ -89,12 +86,11 @@ var app = new Vue({
             const vm = this;
             try {
                 this.validateForm(vm);
-                let queryParams = [{name: vm.queryParamName1, value: vm.queryParamValue1}, {name: vm.queryParamName2, value: vm.queryParamValue2}];
                 axios.put(`http://localhost:8080/mocks`, {
                     id: vm.id,
                     name: vm.name,
                     request: vm.request,
-                    queryParams: queryParams,
+                    queryParams: vm.queryParams,
                     response: vm.response
                 })
                 .then(function (response) {
@@ -141,6 +137,7 @@ var app = new Vue({
             vm.id = 0;
             vm.name = '';
             vm.request = '';
+            vm.queryParams = [];
             vm.response = '';
         }
     }
