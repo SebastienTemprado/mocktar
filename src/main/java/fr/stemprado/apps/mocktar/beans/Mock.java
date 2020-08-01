@@ -1,5 +1,6 @@
 package fr.stemprado.apps.mocktar.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.stemprado.apps.mocktar.beans.QueryParam;
@@ -16,7 +17,7 @@ public class Mock {
   
     public String name;
     public String request;
-    public List<QueryParam> queryParams;
+    public List<QueryParam> queryParams = new ArrayList<>();
     public String response;
   
     public Mock() {}
