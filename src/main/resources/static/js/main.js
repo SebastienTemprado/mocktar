@@ -139,6 +139,10 @@ var app = new Vue({
             vm.request = '';
             vm.queryParams = [];
             vm.response = '';
+        },
+        addQueryParam: function() {
+            const vm = this;
+            vm.queryParams.push({name: '', value: ''});
         }
     }
 })
