@@ -1,6 +1,8 @@
 package fr.stemprado.apps.mocktar.controllers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.stemprado.apps.mocktar.beans.Mock;
+import fr.stemprado.apps.mocktar.beans.QueryParam;
 import fr.stemprado.apps.mocktar.exceptions.NotFoundException;
 import fr.stemprado.apps.mocktar.services.MockService;
 
@@ -51,9 +54,39 @@ public class MockController {
     public String handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String mockURI = request.getRequestURI().replace("/mocktar", "");
 		List<Mock> mocks = mockService.getMocks(null);
-		Mock mock = mocks.stream().filter(m -> m.request.equals(mockURI)).findFirst().orElseThrow(() -> new NotFoundException());
+		List<Mock> matchingMocks = mocks.stream().filter(m -> m.request.equals(mockURI)).collect(Collectors.toList());
 
-      	return mock.response;
+		Mock bestMatchingMock = filterMocksByMatchingQueryParams(request, matchingMocks);
+
+      	return bestMatchingMock.response;
     }
+
+	private Mock filterMocksByMatchingQueryParams(HttpServletRequest request, List<Mock> matchingMocks) {
+		Mock matchingMock = matchingMocks.stream().findFirst().orElseThrow(() -> new NotFoundException());
+
+		Map<String, String[]> queryParameters = request.getParameterMap(); 
+		int highestMatchingQueryParamsCounter = 0;
+		for (Mock currentMock : matchingMocks) {
+			int matchingQueryParamCounter = 0;
+			for (QueryParam queryParam : currentMock.queryParams) {
+				for (Map.Entry<String, String[]> entry : queryParameters.entrySet()) {
+
+					if (queryParam.name.equals(entry.getKey())) {
+						for (String queryParamValue : entry.getValue()) {
+							if (queryParamValue.equals(queryParam.value)) {
+								matchingQueryParamCounter++;
+							}
+						}
+					}
+				}
+			}
+			// what happens when we have 2 matching mocks (QR a,b vs QR c,d) ? --> TODO add an order field
+			if (matchingQueryParamCounter > highestMatchingQueryParamsCounter) {
+				highestMatchingQueryParamsCounter = matchingQueryParamCounter;
+				matchingMock = currentMock;
+			}
+		}
+		return matchingMock;
+	}
 
 }
