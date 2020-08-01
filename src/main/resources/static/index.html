@@ -47,7 +47,7 @@
                         </div>
                         <div class="row-multi-field">
                             <div class="field-name-value" v-for="(queryParam, index) in queryParams">
-                                <button class="deleteQueryParamButton button" v-on:click="">X</button>
+                                <button class="deleteQueryParamButton button" v-on:click="deleteQueryParam(index)">X</button>
                                 <div class="label">
                                     <label :for="'queryParamName' + index">Name:</label>
                                 </div>

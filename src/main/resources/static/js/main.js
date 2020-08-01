@@ -143,6 +143,10 @@ var app = new Vue({
         addQueryParam: function() {
             const vm = this;
             vm.queryParams.push({name: '', value: ''});
+        },
+        deleteQueryParam: function(indexQueryParamToDelete) {
+            const vm = this;
+            vm.queryParams.splice(indexQueryParamToDelete, 1);
         }
     }
-})
+});
