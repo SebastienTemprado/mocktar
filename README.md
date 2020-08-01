@@ -16,6 +16,7 @@ An application for mocking API
 <li>ReadME</li>
 <li>Confirm deletion</li>
 <li>Add some css for the selected mock</li>
+<li>Add some css for the mocks which have been modified but not saved yet</li>
 <li>Add Cancel button (when adding or updating)</li>
 <li>Store mocks in MongoDB *OR* in FS</li>
 <li>Show current version in the footer</li>
