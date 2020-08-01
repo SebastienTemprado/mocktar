@@ -113,7 +113,7 @@ main {
     margin-left: 5px;
 }
 
-.update:disabled {
+#addQueryParamButton, .update:disabled {
     background: #666666;
 }
 
