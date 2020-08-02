@@ -4,7 +4,6 @@ An application for mocking API
 # TODO
 
 <ul>
-<li>Add the Verb field</li>
 <li>Body request field for POST requests...</li>
 <li>Handle HeaderParams</li>
 <li>Log requests/responses</li>
