@@ -90,6 +90,10 @@ main {
     width: 50%;
 }
 
+.option {
+    color: #000000;
+}
+
 .inputQueryParam {
     color: #000000;
     width: 100%; 

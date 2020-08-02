@@ -3,6 +3,7 @@ import { Verbs } from './verbs.js';
 var app = new Vue({
     el: '#app',
     data: { 
+        verbs: Verbs,
         mocks: [],
         message: '',
         id: 0,
