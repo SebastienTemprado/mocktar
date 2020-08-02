@@ -1,3 +1,5 @@
+import { Verbs } from './verbs.js';
+
 var app = new Vue({
     el: '#app',
     data: { 
@@ -5,6 +7,7 @@ var app = new Vue({
         message: '',
         id: 0,
         name: '',
+        verb: Verbs.GET,
         request: '',
         queryParams: [],
         response: '',
@@ -37,6 +40,7 @@ var app = new Vue({
                     vm.message = response.data[0].id;
                     vm.id = response.data[0].id;
                     vm.name = response.data[0].name;
+                    vm.verb = response.data[0].verb;
                     vm.request = response.data[0].request;
                     vm.queryParams = response.data[0].queryParams;
                     vm.response = response.data[0].response;
@@ -62,6 +66,7 @@ var app = new Vue({
                     axios.post(`http://localhost:8080/mocks`, {
                         id: 0,
                         name: vm.name,
+                        verb: vm.verb,
                         request: vm.request,
                         queryParams: vm.queryParams,
                         response: vm.response
@@ -89,6 +94,7 @@ var app = new Vue({
                 axios.put(`http://localhost:8080/mocks`, {
                     id: vm.id,
                     name: vm.name,
+                    verb: vm.verb,
                     request: vm.request,
                     queryParams: vm.queryParams,
                     response: vm.response
@@ -136,6 +142,7 @@ var app = new Vue({
             const vm = this;
             vm.id = 0;
             vm.name = '';
+            vm.verb = Verbs.GET;
             vm.request = '';
             vm.queryParams = [];
             vm.response = '';

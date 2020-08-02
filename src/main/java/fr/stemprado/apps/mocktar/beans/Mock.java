@@ -16,15 +16,17 @@ public class Mock {
     public Long id;
   
     public String name;
+    public String verb;
     public String request;
     public List<QueryParam> queryParams = new ArrayList<>();
     public String response;
   
     public Mock() {}
   
-    public Mock(long id, String name, String request, List<QueryParam> queryParams, String response) {
+    public Mock(long id, String name, String verb, String request, List<QueryParam> queryParams, String response) {
       this.id = id;
       this.name = name;
+      this.verb = verb;
       this.request = request;
       this.queryParams = queryParams;
       this.response = response;
@@ -33,6 +35,6 @@ public class Mock {
     @Override
     public String toString() {
       return String.format(
-          "Mock[id=%d, name='%s' request='%s', queryParams='%s' response='%s']", id, name, request, queryParams == null ? "" : queryParams.toString(), response);
+          "Mock[id=%d, name='%s' verb='%s' request='%s', queryParams='%s' response='%s']", id, name, verb, request, queryParams == null ? "" : queryParams.toString(), response);
     }    
 }
