@@ -4,11 +4,11 @@ An application for mocking API
 # TODO
 
 <ul>
-<li>Handle QueryParams</li>
 <li>Add the Verb field</li>
 <li>Body request field for POST requests...</li>
 <li>Handle HeaderParams</li>
 <li>Log requests/responses</li>
+<li>Handle QueryParams with regexp</li>
 <li>Group Requests by API name</li>
 <li>Form validation : red borders for errors</li>
 <li>Add filter field</li>
