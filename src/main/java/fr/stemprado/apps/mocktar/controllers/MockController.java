@@ -54,7 +54,7 @@ public class MockController {
     public String handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String mockURI = request.getRequestURI().replace("/mocktar", "");
 		List<Mock> mocks = mockService.getMocks(null);
-		List<Mock> matchingMocks = mocks.stream().filter(m -> m.request.equals(mockURI)).collect(Collectors.toList());
+		List<Mock> matchingMocks = mocks.stream().filter(m -> m.request.equals(mockURI) && m.verb.equals(request.getMethod())).collect(Collectors.toList());
 
 		Mock bestMatchingMock = filterMocksByMatchingQueryParams(request, matchingMocks);
 
