@@ -4,7 +4,7 @@ An application for mocking API
 # TODO
 
 <ul>
-<li>Body request field for POST requests...</li>
+<li>Body request field for POST/PUT/PATCH requests...</li>
 <li>Handle HeaderParams</li>
 <li>Log requests/responses</li>
 <li>Fix: special char in name (|, [, ], ...)</li>
