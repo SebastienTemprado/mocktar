@@ -2,6 +2,7 @@ package fr.stemprado.apps.mocktar.controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,7 +74,8 @@ public class MockController {
 
 					if (queryParam.name.equals(entry.getKey())) {
 						for (String queryParamValue : entry.getValue()) {
-							if (queryParamValue.equals(queryParam.value)) {
+							Pattern p = Pattern.compile(queryParam.value);
+							if (p.matcher(queryParamValue).matches()) {
 								matchingQueryParamCounter++;
 							}
 						}
