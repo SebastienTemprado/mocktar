@@ -7,7 +7,7 @@ An application for mocking API
 <li>Body request field for POST requests...</li>
 <li>Handle HeaderParams</li>
 <li>Log requests/responses</li>
-<li>Handle QueryParams with regexp</li>
+<li>Fix: special char in name (|, [, ], ...)</li>
 <li>Group Requests by API name</li>
 <li>Form validation : red borders for errors</li>
 <li>Add filter field</li>
