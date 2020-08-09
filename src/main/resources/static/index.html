@@ -92,6 +92,14 @@
                     </div>
                     <div class="row">
                         <div class="label">
+                            <label for="requestBody">Body:</label>
+                        </div>
+                        <div class="field">
+                            <textarea id="requestBody" v-model.trim="body" rows="15" cols="150" class="input" :disabled="!formActivation"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
                             <label for="response">Response:</label>
                         </div>
                         <div class="field">

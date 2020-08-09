@@ -11,6 +11,7 @@ var app = new Vue({
         verb: Verbs.GET,
         request: '',
         queryParams: [],
+        body: '',
         response: '',
         formActivation: false,
         updating: false
@@ -44,6 +45,7 @@ var app = new Vue({
                     vm.verb = response.data[0].verb;
                     vm.request = response.data[0].request;
                     vm.queryParams = response.data[0].queryParams;
+                    vm.body = response.data[0].body;
                     vm.response = response.data[0].response;
                     vm.formActivation = true;
                     vm.updating = true;
@@ -70,6 +72,7 @@ var app = new Vue({
                         verb: vm.verb,
                         request: vm.request,
                         queryParams: vm.queryParams,
+                        body: vm.body,
                         response: vm.response
                     })
                     .then(function (response) {
@@ -98,6 +101,7 @@ var app = new Vue({
                     verb: vm.verb,
                     request: vm.request,
                     queryParams: vm.queryParams,
+                    body: vm.body,
                     response: vm.response
                 })
                 .then(function (response) {
@@ -146,6 +150,7 @@ var app = new Vue({
             vm.verb = Verbs.GET;
             vm.request = '';
             vm.queryParams = [];
+            vm.body = '';
             vm.response = '';
         },
         addQueryParam: function() {

@@ -3,7 +3,6 @@ package fr.stemprado.apps.mocktar.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.stemprado.apps.mocktar.beans.QueryParam;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
@@ -19,22 +18,24 @@ public class Mock {
     public String verb;
     public String request;
     public List<QueryParam> queryParams = new ArrayList<>();
+    public String body;
     public String response;
   
     public Mock() {}
   
-    public Mock(long id, String name, String verb, String request, List<QueryParam> queryParams, String response) {
+    public Mock(long id, String name, String verb, String request, List<QueryParam> queryParams, String body, String response) {
       this.id = id;
       this.name = name;
       this.verb = verb;
       this.request = request;
       this.queryParams = queryParams;
+      this.body = body;
       this.response = response;
     }
   
     @Override
     public String toString() {
       return String.format(
-          "Mock[id=%d, name='%s' verb='%s' request='%s', queryParams='%s' response='%s']", id, name, verb, request, queryParams == null ? "" : queryParams.toString(), response);
+          "Mock[id=%d, name='%s', verb='%s', request='%s', queryParams='%s', body='%s' response='%s']", id, name, verb, request, queryParams == null ? "" : queryParams.toString(), body, response);
     }    
 }
