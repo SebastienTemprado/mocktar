@@ -1,5 +1,6 @@
 package fr.stemprado.apps.mocktar.controllers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -40,11 +41,10 @@ public class MockController {
 		mockService.postMock(mock);
 	}
 
-	@PutMapping("/mocks") 
+	@PutMapping("/mocks")
 	public void putMock(@RequestBody Mock mock) {
 		mockService.putMock(mock);
 	}
-
 
 	@DeleteMapping("/mocks/{name}")
 	public void deleteMock(@PathVariable String name) {
@@ -52,15 +52,24 @@ public class MockController {
 	}
 
 	@RequestMapping("/mocktar/**")
-    public String handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String mockURI = request.getRequestURI().replace("/mocktar", "");
 		List<Mock> mocks = mockService.getMocks(null);
-		List<Mock> matchingMocks = mocks.stream().filter(m -> m.request.equals(mockURI) && m.verb.equals(request.getMethod())).collect(Collectors.toList());
+		List<Mock> matchingMocks = mocks.stream()
+				.filter(m -> m.request.equals(mockURI) && m.verb.equals(request.getMethod()))
+				.collect(Collectors.toList());
 
+		matchingMocks = filterMocksByMatchingRequestBody(request, matchingMocks);
 		Mock bestMatchingMock = filterMocksByMatchingQueryParams(request, matchingMocks);
 
-      	return bestMatchingMock.response;
-    }
+		return bestMatchingMock.response;
+	}
+
+	private List<Mock> filterMocksByMatchingRequestBody(HttpServletRequest request, List<Mock> matchingMocks)
+			throws IOException {
+		String requestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+		return matchingMocks.stream().filter(mock -> "".equals(mock.body) || mock.body.replaceAll("(\r\n|\n)", "").equals(requestBody.replaceAll("(\r\n|\n)", ""))).collect(Collectors.toList());
+	}
 
 	private Mock filterMocksByMatchingQueryParams(HttpServletRequest request, List<Mock> matchingMocks) {
 		Mock matchingMock = matchingMocks.stream().findFirst().orElseThrow(() -> new NotFoundException());
@@ -71,7 +80,6 @@ public class MockController {
 			int matchingQueryParamCounter = 0;
 			for (QueryParam queryParam : currentMock.queryParams) {
 				for (Map.Entry<String, String[]> entry : queryParameters.entrySet()) {
-
 					if (queryParam.name.equals(entry.getKey())) {
 						for (String queryParamValue : entry.getValue()) {
 							Pattern p = Pattern.compile(queryParam.value);
