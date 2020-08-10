@@ -92,6 +92,43 @@
                     </div>
                     <div class="row">
                         <div class="label">
+                            HeaderParam:
+                        </div>
+                        <div class="row-multi-field">
+                            <div class="field-name-value" v-for="(headerParam, index) in headerParams">
+                                <button class="deleteHeaderParamButton button" v-on:click="deleteHeaderParam(index)" :disabled="!formActivation">X</button>
+                                <div class="label">
+                                    <label :for="'headerParamName' + index">Name:</label>
+                                </div>
+                                <div class="field">
+                                    <input :id="'headerParamName' + index" v-model.trim="headerParams[index].name" class="inputHeaderParam" :disabled="!formActivation">
+                                </div>
+                                <div class="label">
+                                    <label :for="'headerParamValue' + index">Value:</label>
+                                </div>
+                                <div class="field">
+                                    <input :id="'headerParamValue' + index" v-model.trim="headerParams[index].value" class="inputHeaderParam" :disabled="!formActivation">
+                                </div>
+                            </div>
+                            <div class="field-name-value">
+                                <button id="addHeaderParamButton" ref="addHeaderParamButton" class="add button" v-on:click="addHeaderParam()" :disabled="!formActivation">+</button>
+                                <div class="label">
+                                    <label>Name:</label>
+                                </div>
+                                <div class="field">
+                                    <input class="inputHeaderParam" disabled="true">
+                                </div>
+                                <div class="label">
+                                    <label>Value:</label>
+                                </div>
+                                <div class="field">
+                                    <input class="inputHeaderParam" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
                             <label for="requestBody">Body:</label>
                         </div>
                         <div class="field">

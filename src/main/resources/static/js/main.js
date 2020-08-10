@@ -11,6 +11,7 @@ var app = new Vue({
         verb: Verbs.GET,
         request: '',
         queryParams: [],
+        headerParams: [],
         body: '',
         response: '',
         formActivation: false,
@@ -45,6 +46,7 @@ var app = new Vue({
                     vm.verb = response.data[0].verb;
                     vm.request = response.data[0].request;
                     vm.queryParams = response.data[0].queryParams;
+                    vm.headerParams = response.data[0].headerParams;
                     vm.body = response.data[0].body;
                     vm.response = response.data[0].response;
                     vm.formActivation = true;
@@ -72,6 +74,7 @@ var app = new Vue({
                         verb: vm.verb,
                         request: vm.request,
                         queryParams: vm.queryParams,
+                        headerParams: vm.headerParams,
                         body: vm.body,
                         response: vm.response
                     })
@@ -101,6 +104,7 @@ var app = new Vue({
                     verb: vm.verb,
                     request: vm.request,
                     queryParams: vm.queryParams,
+                    headerParams: vm.headerParams,
                     body: vm.body,
                     response: vm.response
                 })
@@ -150,6 +154,7 @@ var app = new Vue({
             vm.verb = Verbs.GET;
             vm.request = '';
             vm.queryParams = [];
+            vm.headerParams = [];
             vm.body = '';
             vm.response = '';
         },
@@ -160,6 +165,14 @@ var app = new Vue({
         deleteQueryParam: function(indexQueryParamToDelete) {
             const vm = this;
             vm.queryParams.splice(indexQueryParamToDelete, 1);
+        },
+        addHeaderParam: function() {
+            const vm = this;
+            vm.headerParams.push({name: '', value: ''});
+        },
+        deleteHeaderParam: function(indexHeaderParamToDelete) {
+            const vm = this;
+            vm.headerParams.splice(indexHeaderParamToDelete, 1);
         }
     }
 });
