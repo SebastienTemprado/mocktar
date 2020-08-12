@@ -69,7 +69,42 @@ public class MockController {
 		matchingMocks = filterMocksByMatchingHeaderParams(request, matchingMocks);
 		Mock bestMatchingMock = filterMocksByMatchingQueryParams(request, matchingMocks);
 
+		matchingMockLog(request, mockURI, bestMatchingMock);
 		return bestMatchingMock.response;
+	}
+
+	private void matchingMockLog(HttpServletRequest request, String mockURI, Mock bestMatchingMock) throws IOException {
+		String matchingMockLog = "";
+		String requestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+		boolean definedBody = requestBody != null && requestBody.length() != 0;
+		String bodyLog = definedBody ? ", body:" + requestBody : "";
+
+		String headerParams = ", headers:[\n";
+		Enumeration<String> requestHeaderNames = request.getHeaderNames();
+		while (requestHeaderNames.hasMoreElements()) {
+			String requestHeaderName = requestHeaderNames.nextElement();
+			headerParams += requestHeaderName + "=";
+			Enumeration requestHeaderValues = request.getHeaders(requestHeaderName);
+			if (requestHeaderValues != null) {
+				while (requestHeaderValues.hasMoreElements()) {
+					String requestHeaderValue = (String) requestHeaderValues.nextElement();
+					headerParams += requestHeaderValue + ",";
+				}
+				headerParams = headerParams.substring(0, headerParams.length() - 1);
+			}
+			headerParams += '\n';
+		}
+		headerParams += ']';
+
+		String queryParamsLog = ", queryParams:[\n";
+		Map<String, String[]> queryParameters = request.getParameterMap();
+		for (Map.Entry<String, String[]> entry : queryParameters.entrySet()) {
+			queryParamsLog += entry.getKey() + "=" + entry.getValue() + '\n';
+		}
+		queryParamsLog += ']';
+
+		matchingMockLog = "Catched Request = " + request.getMethod() + " " + mockURI + bodyLog + headerParams + queryParamsLog + " --> Best matching mock = " + bestMatchingMock.name + " (" + bestMatchingMock.toString() + ")";
+		System.out.println(matchingMockLog);
 	}
 
 	private List<Mock> filterMocksByMatchingRequestBody(HttpServletRequest request, List<Mock> matchingMocks)
