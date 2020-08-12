@@ -4,7 +4,6 @@ An application for mocking API
 # TODO
 
 <ul>
-<li>Handle HeaderParams</li>
 <li>Log requests/responses</li>
 <li>Fix: special char in name (|, [, ], ...)</li>
 <li>Group Requests by API name</li>
