@@ -7,6 +7,7 @@ An application for mocking API
 <li>Log requests/responses</li>
 <li>Fix: special char in name (|, [, ], ...)</li>
 <li>Group Requests by API name</li>
+<li>Mocks filtering : Nearest Strategy and Strict Strategy</li>
 <li>Form validation : red borders for errors</li>
 <li>Add filter field</li>
 <li>Load the configuration file from a location outside the jar</li>
