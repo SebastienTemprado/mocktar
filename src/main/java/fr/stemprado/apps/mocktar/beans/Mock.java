@@ -38,6 +38,6 @@ public class Mock {
     @Override
     public String toString() {
       return String.format(
-          "Mock[id=%d, name='%s', verb='%s', request='%s', queryParams='%s', headerParams='%s', body='%s' response='%s']", id, name, verb, request, queryParams == null ? "" : queryParams.toString(), headerParams == null ? "" : headerParams.toString(), body, response);
+          "Mock[id=%d, name='%s', verb='%s', request='%s',\nqueryParams='%s',\nheaderParams='%s',\nbody='%s'\nresponse='%s']", id, name, verb, request, queryParams == null ? "" : queryParams.toString(), headerParams == null ? "" : headerParams.toString(), body, response);
     }    
 }

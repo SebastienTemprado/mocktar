@@ -1,19 +1,19 @@
 package fr.stemprado.apps.mocktar.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +36,8 @@ public class MockController {
 
 	@Autowired
 	private MockService mockService;
+
+	private Logger logger = LoggerFactory.getLogger(MockController.class);
 
 	@GetMapping("/mocks")
 	public List<Mock> getMocks(@RequestParam(value = "name", required = false) String name) {
@@ -65,25 +67,28 @@ public class MockController {
 				.filter(m -> m.request.equals(mockURI) && m.verb.equals(request.getMethod()))
 				.collect(Collectors.toList());
 
-		matchingMocks = filterMocksByMatchingRequestBody(request, matchingMocks);
+		String requestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+		matchingMocks = filterMocksByMatchingRequestBody(requestBody, matchingMocks);
 		matchingMocks = filterMocksByMatchingHeaderParams(request, matchingMocks);
 		Mock bestMatchingMock = filterMocksByMatchingQueryParams(request, matchingMocks);
 
-		matchingMockLog(request, mockURI, bestMatchingMock);
-		return bestMatchingMock.response;
+		if (bestMatchingMock == null) {
+			noMatchingMockLog(request, requestBody, mockURI);
+			throw new NotFoundException();
+		} else {
+			matchingMockLog(request, requestBody, mockURI, bestMatchingMock);
+			return bestMatchingMock.response;
+		}
 	}
 
-	private void matchingMockLog(HttpServletRequest request, String mockURI, Mock bestMatchingMock) throws IOException {
-		String matchingMockLog = "";
-		String requestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+	private String catchedRequestLog(HttpServletRequest request, String requestBody, String mockURI) throws IOException {
 		boolean definedBody = requestBody != null && requestBody.length() != 0;
-		String bodyLog = definedBody ? ", body:" + requestBody : "";
-
-		String headerParams = ", headers:[\n";
+		String bodyLog = definedBody ? "\nbody:" + requestBody : "\n";
+		String headerParams = "\nheaders:[\n";
 		Enumeration<String> requestHeaderNames = request.getHeaderNames();
 		while (requestHeaderNames.hasMoreElements()) {
 			String requestHeaderName = requestHeaderNames.nextElement();
-			headerParams += requestHeaderName + "=";
+			headerParams += '\t' + requestHeaderName + "=";
 			Enumeration requestHeaderValues = request.getHeaders(requestHeaderName);
 			if (requestHeaderValues != null) {
 				while (requestHeaderValues.hasMoreElements()) {
@@ -96,20 +101,28 @@ public class MockController {
 		}
 		headerParams += ']';
 
-		String queryParamsLog = ", queryParams:[\n";
+		String queryParamsLog = ",\nqueryParams:[\n";
 		Map<String, String[]> queryParameters = request.getParameterMap();
 		for (Map.Entry<String, String[]> entry : queryParameters.entrySet()) {
-			queryParamsLog += entry.getKey() + "=" + entry.getValue() + '\n';
+			queryParamsLog += '\t' + entry.getKey() + "=" + entry.getValue() + '\n';
 		}
-		queryParamsLog += ']';
-
-		matchingMockLog = "Catched Request = " + request.getMethod() + " " + mockURI + bodyLog + headerParams + queryParamsLog + " --> Best matching mock = " + bestMatchingMock.name + " (" + bestMatchingMock.toString() + ")";
-		System.out.println(matchingMockLog);
+		queryParamsLog += "]\n";
+		
+		return "\nCatched Request = " + request.getMethod() + " " + mockURI + bodyLog + headerParams + queryParamsLog;
 	}
 
-	private List<Mock> filterMocksByMatchingRequestBody(HttpServletRequest request, List<Mock> matchingMocks)
+	private void noMatchingMockLog(HttpServletRequest request, String requestBody, String mockURI) throws IOException {
+		String noMatchingMockLog = catchedRequestLog(request, requestBody, mockURI) + "\n--> No matching mock\n";
+		logger.info(noMatchingMockLog);
+	}
+
+	private void matchingMockLog(HttpServletRequest request, String requestBody, String mockURI, Mock bestMatchingMock) throws IOException {
+		String matchingMockLog = catchedRequestLog(request, requestBody, mockURI) + "\n--> Best matching mock = \n" + bestMatchingMock.name + "\n" + bestMatchingMock.toString();
+		logger.info(matchingMockLog);
+	}
+
+	private List<Mock> filterMocksByMatchingRequestBody(String requestBody, List<Mock> matchingMocks)
 			throws IOException {
-		String requestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 		return matchingMocks.stream()
 				.filter(mock -> "".equals(mock.body)
 						|| mock.body.replaceAll("(\r\n|\n)", "").equals(requestBody.replaceAll("(\r\n|\n)", "")))
@@ -165,29 +178,31 @@ public class MockController {
 	}
 
 	private Mock filterMocksByMatchingQueryParams(HttpServletRequest request, List<Mock> matchingMocks) {
-		Mock matchingMock = matchingMocks.stream().findFirst().orElseThrow(() -> new NotFoundException());
+		Mock matchingMock = matchingMocks.stream().findFirst().orElse(null);
 
-		Map<String, String[]> queryParameters = request.getParameterMap();
-		int highestMatchingQueryParamsCounter = 0;
-		for (Mock currentMock : matchingMocks) {
-			int matchingQueryParamCounter = 0;
-			for (QueryParam queryParam : currentMock.queryParams) {
-				for (Map.Entry<String, String[]> entry : queryParameters.entrySet()) {
-					if (queryParam.name.equals(entry.getKey())) {
-						for (String queryParamValue : entry.getValue()) {
-							Pattern p = Pattern.compile(queryParam.value);
-							if (p.matcher(queryParamValue).matches()) {
-								matchingQueryParamCounter++;
+		if (matchingMock != null) {
+			Map<String, String[]> queryParameters = request.getParameterMap();
+			int highestMatchingQueryParamsCounter = 0;
+			for (Mock currentMock : matchingMocks) {
+				int matchingQueryParamCounter = 0;
+				for (QueryParam queryParam : currentMock.queryParams) {
+					for (Map.Entry<String, String[]> entry : queryParameters.entrySet()) {
+						if (queryParam.name.equals(entry.getKey())) {
+							for (String queryParamValue : entry.getValue()) {
+								Pattern p = Pattern.compile(queryParam.value);
+								if (p.matcher(queryParamValue).matches()) {
+									matchingQueryParamCounter++;
+								}
 							}
 						}
 					}
 				}
-			}
-			// what happens when we have 2 matching mocks (QR a,b vs QR c,d) ? --> TODO add
-			// an order field
-			if (matchingQueryParamCounter > highestMatchingQueryParamsCounter) {
-				highestMatchingQueryParamsCounter = matchingQueryParamCounter;
-				matchingMock = currentMock;
+				// what happens when we have 2 matching mocks (QR a,b vs QR c,d) ? --> TODO add
+				// an order field
+				if (matchingQueryParamCounter > highestMatchingQueryParamsCounter) {
+					highestMatchingQueryParamsCounter = matchingQueryParamCounter;
+					matchingMock = currentMock;
+				}
 			}
 		}
 		return matchingMock;

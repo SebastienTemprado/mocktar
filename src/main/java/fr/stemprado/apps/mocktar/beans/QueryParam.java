@@ -15,6 +15,6 @@ public class QueryParam {
     @Override
     public String toString() {
       return String.format(
-          "QueryParam[name='%s' value='%s']", name, value);
+          "[name='%s' value='%s']", name, value);
     }    
 }

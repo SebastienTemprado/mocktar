@@ -15,6 +15,6 @@ public class HeaderParam {
     @Override
     public String toString() {
       return String.format(
-          "HeaderParam[name='%s' value='%s']", name, value);
+          "[name='%s' value='%s']", name, value);
     }    
 }
