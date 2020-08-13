@@ -8,14 +8,18 @@ var app = new Vue({
         message: '',
         id: 0,
         name: '',
-        verb: Verbs.GET,
+        verb: Verbs[0],
         request: '',
         queryParams: [],
         headerParams: [],
         body: '',
         response: '',
         formActivation: false,
-        updating: false
+        updating: false,
+        errors: false,
+        nameFieldError: false,
+        requestFieldError: false,
+        responseFieldError: false
     },
     created: function() {
         const vm = this;
@@ -29,6 +33,7 @@ var app = new Vue({
                 vm.mocks = response.data;
             })
             .catch(function (error) {
+                vm.errors = true;
                 vm.message = 'Error! Could not reach the API. ' + error;
             })
         },
@@ -51,10 +56,15 @@ var app = new Vue({
                     vm.response = response.data[0].response;
                     vm.formActivation = true;
                     vm.updating = true;
+                    vm.errors = false;
+                    vm.nameFieldError = false;
+                    vm.requestFieldError = false;
+                    vm.responseFieldError = false;
                 }
             })
             .catch(function (error) {
                 vm.message = 'Error! Could not reach the API. ' + error;
+                vm.errors = true;
                 vm.formActivation = false;
             })
         },
@@ -79,16 +89,18 @@ var app = new Vue({
                         response: vm.response
                     })
                     .then(function (response) {
-                        vm.message = `mock ${vm.name} added!` ;
+                        vm.message = `The mock ${vm.name} has been added!` ;
                         vm.getMocks();
                     })
                     .catch(function (error) {
+                        vm.errors = true;
                         vm.message = `Error! Could not add the mock ${vm.name}.` + error;
                     })
                     this.$refs.addButton.textContent = '+ Add';
                     vm.formActivation = false;
                     vm.clearForm();
                 } catch (error) {
+                    vm.errors = true;
                     vm.message = error;
                 }
             }
@@ -109,16 +121,18 @@ var app = new Vue({
                     response: vm.response
                 })
                 .then(function (response) {
-                    vm.message = `mock ${vm.name} updated!` ;
+                    vm.message = `The mock ${vm.name} has been updated!` ;
                     vm.getMocks();
                 })
                 .catch(function (error) {
+                    vm.errors = true;
                     vm.message = `Error! Could not add the mock ${vm.name}.` + error;
                 })
                 vm.formActivation = false;
                 vm.updating = false;
                 vm.clearForm();
             } catch (error) {
+                vm.errors = true;
                 vm.message = error;
             }
         },
@@ -135,28 +149,42 @@ var app = new Vue({
                 }
             })
             .catch(function (error) {
+                vm.errors = true;
                 vm.message = `Error! Could not delete the mock ${name}.` + error;
             })
         },
         validateForm: function(vm) {
-            if (vm.name === '' || vm.request === '' || vm.response === '') {
+            vm.name === '' ? vm.nameFieldError = true : vm.nameFieldError = false;
+            vm.request === '' ? vm.requestFieldError = true : vm.requestFieldError = false;
+            vm.response === '' ? vm.responseFieldError = true : vm.responseFieldError = false;
+            
+            if (vm.nameFieldError || vm.requestFieldError || vm.responseFieldError) {
+                vm.errors = true;
                 throw new Error(`Invalid form.`);
+            } else {
+                vm.errors = false;
             }
 
             if (vm.mocks.filter(m => m.name === vm.name && m.id !== vm.id).length > 0) {
+                vm.errors = true;
                 throw new Error('This mock already exists!');
             } 
+            
         }, 
         clearForm: function() {
             const vm = this;
             vm.id = 0;
             vm.name = '';
-            vm.verb = Verbs.GET;
+            vm.verb = Verbs[0];
             vm.request = '';
             vm.queryParams = [];
             vm.headerParams = [];
             vm.body = '';
             vm.response = '';
+            vm.errors = false;
+            vm.nameFieldError = false;
+            vm.requestFieldError = false;
+            vm.responseFieldError = false;
         },
         addQueryParam: function() {
             const vm = this;

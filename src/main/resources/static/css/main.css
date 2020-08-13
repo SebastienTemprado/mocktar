@@ -46,6 +46,14 @@ main {
     margin-top: 5px;
 }
 
+.error, .rowWithError div.label label {
+    color: #FF0000;
+}
+
+.rowWithError div.field input, .rowWithError div.field textarea {
+    border-color: #FF0000;
+}
+
 #actions {
     display: flex;
     justify-content: space-around;

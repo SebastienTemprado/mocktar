@@ -25,9 +25,9 @@
                 </div>
 
                 <div id="mock-content">
-                    <div class="row">
+                    <div class="row" v-bind:class="{ rowWithError: nameFieldError }">
                         <div class="label">
-                            <label for="name">Name:</label>
+                            <label for="name">Name * :</label>
                         </div>
                         <div class="field">
                             <input id="name" v-model.trim="name" class="input" :disabled="!formActivation">
@@ -45,9 +45,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" v-bind:class="{ rowWithError: requestFieldError }">
                         <div class="label">
-                            <label for="request">Request:</label>
+                            <label for="request">Request * :</label>
                         </div>
                         <div class="field">
                             <input id="request" v-model.trim="request" class="input" :disabled="!formActivation">
@@ -135,9 +135,9 @@
                             <textarea id="requestBody" v-model.trim="body" rows="15" cols="150" class="input" :disabled="!formActivation"></textarea>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" v-bind:class="{ rowWithError: responseFieldError }">
                         <div class="label">
-                            <label for="response">Response:</label>
+                            <label for="response">Response * :</label>
                         </div>
                         <div class="field">
                             <textarea id="response" v-model.trim="response" rows="15" cols="150" class="input" :disabled="!formActivation"></textarea>
@@ -145,7 +145,7 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <div v-bind:class="{ error: errors }">
                 {{ message }}
             </div>
         </main>
