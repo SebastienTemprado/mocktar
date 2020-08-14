@@ -31,7 +31,7 @@ public class MockService {
                 mocks.add(mock);
             }
         }
-        return mocks.stream().sorted(Comparator.comparing(m -> m.name.toLowerCase())).collect(Collectors.toList());
+        return mocks.stream().sorted(Comparator.comparing(m -> m.name.toLowerCase())).sorted(Comparator.comparing(m -> m.apiName.toLowerCase())).collect(Collectors.toList());
     }
 
     public void postMock(Mock mock) {
