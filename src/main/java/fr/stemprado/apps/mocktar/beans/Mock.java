@@ -14,6 +14,7 @@ public class Mock {
     @Id
     public Long id;
   
+    public String apiName;
     public String name;
     public String verb;
     public String request;
@@ -24,8 +25,9 @@ public class Mock {
   
     public Mock() {}
   
-    public Mock(long id, String name, String verb, String request, List<QueryParam> queryParams, List<HeaderParam> headerParams, String body, String response) {
+    public Mock(long id, String apiName, String name, String verb, String request, List<QueryParam> queryParams, List<HeaderParam> headerParams, String body, String response) {
       this.id = id;
+      this.apiName = apiName;
       this.name = name;
       this.verb = verb;
       this.request = request;
@@ -38,6 +40,6 @@ public class Mock {
     @Override
     public String toString() {
       return String.format(
-          "Mock[id=%d, name='%s', verb='%s', request='%s',\nqueryParams='%s',\nheaderParams='%s',\nbody='%s'\nresponse='%s']", id, name, verb, request, queryParams == null ? "" : queryParams.toString(), headerParams == null ? "" : headerParams.toString(), body, response);
+          "Mock[id=%d, apiName='%s', name='%s', verb='%s', request='%s',\nqueryParams='%s',\nheaderParams='%s',\nbody='%s'\nresponse='%s']", id, apiName, name, verb, request, queryParams == null ? "" : queryParams.toString(), headerParams == null ? "" : headerParams.toString(), body, response);
     }    
 }

@@ -25,6 +25,14 @@
                 </div>
 
                 <div id="mock-content">
+                    <div class="row" v-bind:class="{ rowWithError: apiNameFieldError }">
+                        <div class="label">
+                            <label for="apiName">API Name * :</label>
+                        </div>
+                        <div class="field">
+                            <input id="apiName" v-model.trim="apiName" class="input" :disabled="!formActivation">
+                        </div>
+                    </div>
                     <div class="row" v-bind:class="{ rowWithError: nameFieldError }">
                         <div class="label">
                             <label for="name">Name * :</label>

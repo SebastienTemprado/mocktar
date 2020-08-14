@@ -7,6 +7,7 @@ var app = new Vue({
         mocks: [],
         message: '',
         id: 0,
+        apiName: '',
         name: '',
         verb: Verbs[0],
         request: '',
@@ -17,6 +18,7 @@ var app = new Vue({
         formActivation: false,
         updating: false,
         errors: false,
+        apiNameFieldError: false,
         nameFieldError: false,
         requestFieldError: false,
         responseFieldError: false
@@ -47,6 +49,7 @@ var app = new Vue({
                 } else {
                     vm.message = response.data[0].id;
                     vm.id = response.data[0].id;
+                    vm.apiName = response.data[0].apiName;
                     vm.name = response.data[0].name;
                     vm.verb = response.data[0].verb;
                     vm.request = response.data[0].request;
@@ -57,6 +60,7 @@ var app = new Vue({
                     vm.formActivation = true;
                     vm.updating = true;
                     vm.errors = false;
+                    vm.apiNameFieldError = false;
                     vm.nameFieldError = false;
                     vm.requestFieldError = false;
                     vm.responseFieldError = false;
@@ -80,6 +84,7 @@ var app = new Vue({
                     this.validateForm(vm);
                     axios.post(`http://localhost:8080/mocks`, {
                         id: 0,
+                        apiName: vm.apiName,
                         name: vm.name,
                         verb: vm.verb,
                         request: vm.request,
@@ -112,6 +117,7 @@ var app = new Vue({
                 this.validateForm(vm);
                 axios.put(`http://localhost:8080/mocks`, {
                     id: vm.id,
+                    apiName: vm.apiName,
                     name: vm.name,
                     verb: vm.verb,
                     request: vm.request,
@@ -154,11 +160,12 @@ var app = new Vue({
             })
         },
         validateForm: function(vm) {
+            vm.apiName === '' ? vm.apiNameFieldError = true : vm.apiNameFieldError = false;
             vm.name === '' ? vm.nameFieldError = true : vm.nameFieldError = false;
             vm.request === '' ? vm.requestFieldError = true : vm.requestFieldError = false;
             vm.response === '' ? vm.responseFieldError = true : vm.responseFieldError = false;
             
-            if (vm.nameFieldError || vm.requestFieldError || vm.responseFieldError) {
+            if (vm.apiNameFieldError || vm.nameFieldError || vm.requestFieldError || vm.responseFieldError) {
                 vm.errors = true;
                 throw new Error(`Invalid form.`);
             } else {
@@ -174,6 +181,7 @@ var app = new Vue({
         clearForm: function() {
             const vm = this;
             vm.id = 0;
+            vm.apiName = '';
             vm.name = '';
             vm.verb = Verbs[0];
             vm.request = '';
@@ -182,6 +190,7 @@ var app = new Vue({
             vm.body = '';
             vm.response = '';
             vm.errors = false;
+            vm.apiNameFieldError = false;
             vm.nameFieldError = false;
             vm.requestFieldError = false;
             vm.responseFieldError = false;
